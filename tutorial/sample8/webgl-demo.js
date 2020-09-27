@@ -93,7 +93,7 @@ function main() {
 
   const texture = initTexture(gl);
 
-  const video = setupVideo('Firefox.mp4');
+  const video = setupVideo('name.mp4');
 
   var then = 0;
 
@@ -350,6 +350,7 @@ function initTexture(gl, url) {
   const srcFormat = gl.RGBA;
   const srcType = gl.UNSIGNED_BYTE;
   const pixel = new Uint8Array([0, 0, 255, 255]);  // opaque blue
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
   gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
                 width, height, border, srcFormat, srcType,
                 pixel);
@@ -423,14 +424,14 @@ function drawScene(gl, programInfo, buffers, texture, deltaTime) {
 
   mat4.translate(modelViewMatrix,     // destination matrix
                  modelViewMatrix,     // matrix to translate
-                 [-0.0, 0.0, -6.0]);  // amount to translate
+                 [-0.0, 0.1, -4.0]);  // amount to translate
   mat4.rotate(modelViewMatrix,  // destination matrix
               modelViewMatrix,  // matrix to rotate
               cubeRotation,     // amount to rotate in radians
-              [0, 0, 1]);       // axis to rotate around (Z)
+              [1, 0, 0]);       // axis to rotate around (Z)
   mat4.rotate(modelViewMatrix,  // destination matrix
               modelViewMatrix,  // matrix to rotate
-              cubeRotation * .7,// amount to rotate in radians
+              cubeRotation,// amount to rotate in radians
               [0, 1, 0]);       // axis to rotate around (X)
 
   const normalMatrix = mat4.create();
@@ -539,7 +540,7 @@ function drawScene(gl, programInfo, buffers, texture, deltaTime) {
 
   // Update the rotation for the next draw
 
-  cubeRotation += deltaTime;
+  cubeRotation = 0.3;
 }
 
 //
